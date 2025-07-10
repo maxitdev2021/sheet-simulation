@@ -6,12 +6,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @if (app()->environment('local'))
-        {{-- Development (uses Vite server) --}}
         @vite(['resources/js/app.js'])
     @else
-        {{-- Production (uses built static assets) --}}
+        <link rel="stylesheet" href="{{ asset('build/assets/app-DL65rIRg.css') }}">
         <link rel="stylesheet" href="{{ asset('build/assets/app-YAddkS1L.css') }}">
-        <script src="{{ asset('build/assets/app-Cpkp2jct.js') }}" defer></script>
+        <script src="{{ asset('build/assets/app-BX5JErE7.js') }}" type="module"></script>
     @endif
 </head>
 <body>
