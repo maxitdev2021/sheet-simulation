@@ -1,50 +1,35 @@
-# Use official PHP image with necessary extensions
+# Use PHP 8.2 FPM base image
 FROM php:8.2-fpm
 
 # Set working directory
 WORKDIR /var/www
 
-# Install system dependencies
+# Install dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    curl \
-    git \
-    npm \
-    nodejs \
-    libzip-dev \
-    libpq-dev \
-    libcurl4-openssl-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    libpng-dev \
-    libwebp-dev \
-    libxpm-dev \
+    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev \
+    libjpeg-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql zip gd mbstring
+
+# Install Node.js 18
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy Laravel app
+# Copy source
 COPY . .
 
-# Install PHP dependencies
+# PHP deps
 RUN composer install --no-dev --optimize-autoloader
 
-# Install Node dependencies & build assets
-RUN npm install && npm run build
+# JS deps and build
+RUN npm install --legacy-peer-deps && npm run build
 
-# Set permissions
+# Permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Expose port (if using Laravel development server)
+# Serve
 EXPOSE 8000
-
-# Start Laravel app using artisan
 CMD php artisan serve --host=0.0.0.0 --port=8000
