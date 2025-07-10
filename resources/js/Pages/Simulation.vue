@@ -133,7 +133,7 @@ const downloadExcel = async () => {
   const finalData = [headers, ...rawData]
 
   try {
-    const response = await axios.post('/simulation/export', { data: finalData }, { responseType: 'blob' })
+    const response = await axios.post('/export', { data: finalData }, { responseType: 'blob' })
     const blob = new Blob([response.data], { type: response.headers['content-type'] })
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)

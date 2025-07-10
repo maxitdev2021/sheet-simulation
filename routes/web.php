@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/simulation', [SimulationController::class, 'index']);
-Route::post('/simulation/export', [SimulationController::class, 'export']);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [SimulationController::class, 'index']);
+Route::post('/export', [SimulationController::class, 'export']);
 

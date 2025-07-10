@@ -5,7 +5,14 @@
     <title>Simulation App</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @vite(['resources/js/app.js'])
+    @if (app()->environment('local'))
+        {{-- Development (uses Vite server) --}}
+        @vite(['resources/js/app.js'])
+    @else
+        {{-- Production (uses built static assets) --}}
+        <link rel="stylesheet" href="{{ asset('build/assets/app-YAddkS1L.css') }}">
+        <script src="{{ asset('build/assets/app-Cpkp2jct.js') }}" defer></script>
+    @endif
 </head>
 <body>
     @inertia
