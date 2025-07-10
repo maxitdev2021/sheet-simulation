@@ -89,7 +89,7 @@ class SimulationController extends Controller
             $writer->save('php://output');
         });
 
-        $filename = 'simulation_' . now()->format('Ymd_His') . '.xlsx';
+        $filename = 'シミュレーション'. '.xlsx';
         $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         $response->headers->set('Content-Disposition', "attachment; filename=\"$filename\"");
 

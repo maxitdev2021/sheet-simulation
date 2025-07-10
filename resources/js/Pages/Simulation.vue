@@ -137,7 +137,7 @@ const downloadExcel = async () => {
     const blob = new Blob([response.data], { type: response.headers['content-type'] })
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
-    link.download = 'simulation_with_chart.xlsx'
+    link.download = `シミュレーション_${new Date().valueOf()}.xlsx`
     link.click()
     URL.revokeObjectURL(link.href)
   } catch (err) {
